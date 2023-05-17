@@ -74,10 +74,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: glow 3s infinite alternate;
 }
 
 .glow:hover {
-  box-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 30px hsl(150, 100%, 66%), 0 0 40px hsl(150, 100%, 66%), 0 0 50px hsl(150, 100%, 66%);
+  box-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 30px hsl(150, 100%, 66%),
+    0 0 40px hsl(150, 100%, 66%) 0 0 50px hsl(150, 100%, 66%);
 }
 
 .inner-btn {
@@ -125,8 +127,14 @@
 }
 
 @media (hover: none) {
-  .inner-btn {
-    /* we want to add the hover effect for mobile view */
+  /* we want to add the hover effect for mobile view */
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 10px -10px #aef4af;
+    }
+    to {
+      box-shadow: 0 0 10px 10px #aef4af;
+    }
   }
 }
 </style>
