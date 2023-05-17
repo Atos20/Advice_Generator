@@ -33,11 +33,12 @@
 
 .content {
   font-weight: 800;
-  font-size: 28px;
+  font-size: 30px;
+  font-family: Manrope;
   line-height: 1.5em;
   margin: 20px 20px;
   padding: 10px;
-  height: 100px;
+  height: 160px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,16 +63,46 @@
 
 .btn-container {
   background-color: hsl(150, 100%, 66%);
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   margin-top: 10px;
   padding: 1em;
   position: absolute; /* 2 */
   top: 450px; /* 3 */
   transform: translate(0, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.glow:hover {
+  box-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 30px hsl(150, 100%, 66%), 0 0 40px hsl(150, 100%, 66%), 0 0 50px hsl(150, 100%, 66%);
+}
+
+.inner-btn {
+  background-color: black;
+  height: 35px;
+  width: 35px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.dot-box {
+  height: 15%;
+  width: 70%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.dot {
+  background-color: hsl(150, 100%, 66%);
+  height: 5px;
+  width: 5px;
+}
 @media screen and (min-width: 375px) and (max-width: 750px) {
   .main-body {
     grid-area: 2/ 1/ 5/ 3;
@@ -85,12 +116,17 @@
 
 @media screen and (max-width: 375px) {
   .card-container {
-    background-color: #0069ed;
     height: 465px;
   }
   .advice {
-    font-weight: 400;
-    font-size: 12px;
+    font-weight: 600;
+    font-size: 20px;
+  }
+}
+
+@media (hover: none) {
+  .inner-btn {
+    /* we want to add the hover effect for mobile view */
   }
 }
 </style>
@@ -101,7 +137,21 @@
       <h2 class="advice">Advice # {{ advice.slip.id }}</h2>
       <p class="content">"{{ advice.slip.advice }}"</p>
       <SvgMobileLine />
-      <div class="btn-container"></div>
+      <div class="btn-container glow">
+        <div class="inner-btn">
+          <div class="dot-box">
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+          <div class="dot-box">
+            <div class="dot"></div>
+          </div>
+          <div class="dot-box">
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
