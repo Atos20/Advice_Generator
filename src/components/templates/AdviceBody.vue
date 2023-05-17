@@ -85,12 +85,11 @@
 
 @media screen and (max-width: 375px) {
   .card-container {
-    background-color: #0069ed;
     height: 465px;
   }
   .advice {
-    font-weight: 400;
-    font-size: 12px;
+    font-weight: 600;
+    font-size: 20px;
   }
 }
 </style>
