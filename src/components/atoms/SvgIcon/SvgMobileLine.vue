@@ -13,7 +13,7 @@
 <script setup></script>
 
 <style scoped>
-.mobile{
+.mobile {
   margin: 20px;
 }
 </style>
