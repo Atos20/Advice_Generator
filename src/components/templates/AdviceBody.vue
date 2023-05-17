@@ -25,7 +25,7 @@
 .advice {
   text-transform: uppercase;
   color: hsl(150, 100%, 66%);
-  letter-spacing: 0.2rem;
+  letter-spacing: 0.3rem;
   margin-bottom: 30px;
   font-size: 20px;
   font-weight: 800;
@@ -50,8 +50,6 @@
   padding: 1rem 2rem;
   margin: 0;
   text-decoration: none;
-  background: #0069ed;
-  color: #ffffff;
   font-family: sans-serif;
   font-size: 1rem;
   cursor: pointer;
@@ -61,10 +59,16 @@
   -moz-appearance: none;
 }
 
+.btn-container:focus,
+.btn-container:focus-visible {
+  outline: none;
+  border: none;
+}
+
 .btn-container {
   background-color: hsl(150, 100%, 66%);
-  width: 60px;
-  height: 60px;
+  width: 87px;
+  height: 87px;
   border-radius: 50%;
   margin-top: 10px;
   padding: 1em;
@@ -74,12 +78,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: glow 3s infinite alternate;
+  animation: glow 3s infinite alternate !important;
 }
 
-.glow:hover {
-  box-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 30px hsl(150, 100%, 66%),
-    0 0 40px hsl(150, 100%, 66%) 0 0 50px hsl(150, 100%, 66%);
+.btn-container:hover {
+  box-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 30px hsl(150, 100%, 66%), 0 0 40px hsl(150, 100%, 66%),
+    0 0 50px hsl(150, 100%, 66%);
 }
 
 .inner-btn {
@@ -104,7 +108,14 @@
   background-color: hsl(150, 100%, 66%);
   height: 5px;
   width: 5px;
+  border-radius: 50%;
 }
+
+/* .btn-container:hover {
+  box-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 30px hsl(150, 100%, 66%),
+    0 0 40px hsl(150, 100%, 66%) 0 0 50px hsl(150, 100%, 66%);
+} */
+
 @media screen and (min-width: 375px) and (max-width: 750px) {
   .main-body {
     grid-area: 2/ 1/ 5/ 3;
@@ -113,6 +124,10 @@
 
   .card-container {
     height: 465px;
+  }
+
+  .advice {
+    font-size: 15px;
   }
 }
 
@@ -145,7 +160,7 @@
       <h2 class="advice">Advice # {{ advice.slip.id }}</h2>
       <p class="content">"{{ advice.slip.advice }}"</p>
       <SvgMobileLine />
-      <div class="btn-container glow">
+      <button @click="onHandleAdvice" class="btn-container glow" ref="btnRef">
         <div class="inner-btn">
           <div class="dot-box">
             <div class="dot"></div>
@@ -159,13 +174,32 @@
             <div class="dot"></div>
           </div>
         </div>
-      </div>
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref, nextTick } from 'vue'
+
 import { Advice } from '@/App.vue'
 import SvgMobileLine from '@/components/atoms/SvgIcon/SvgMobileLine.vue'
 defineProps<{ advice: Advice }>()
+const emit = defineEmits(['fetchAdvice'])
+
+//DATA
+const btnRef = ref<HTMLDivElement | null>(null)
+
+//METHODS
+const onHandleAdvice = () => {
+  emit('fetchAdvice')
+}
+
+//LYFE CICLE
+onMounted(async () => {
+  await nextTick()
+  if (btnRef.value) {
+    btnRef.value.focus()
+  }
+})
 </script>
