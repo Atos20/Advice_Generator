@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Manrope, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
@@ -20,6 +20,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -30,6 +31,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #ffffff;
 }
 
 h1 {
@@ -61,21 +63,28 @@ button:focus-visible {
 }
 
 #app {
-  max-width: 1280px;
+  height: 100vh;
+  width: 100%;
+  max-width: 1440px;
+  min-width: 375px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+/* Matches screen between 375px AND 750px */
+@media screen and (min-width: 375px) and (max-width: 750px) {
+  #app {
+    display: grid;
+    background-color: hsl(218, 23%, 16%);
+    grid-template-columns: repeat(2, 50vw);
+    grid-template-rows: repeat(5, 20vh);
+    
   }
 }
+
+@media screen and (min-width: 750px) and (max-width: 1440px) {
+  #app {
+    background-color: hsl(218, 23%, 16%);
+  }
+}
+
