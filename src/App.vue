@@ -1,5 +1,5 @@
 <template>
-  <AppHeader />
+  <BannerPage :banner="banner" />
   <AdviceBody v-if="advice" :advice="advice" @fetchAdvice="fetchAdvice" />
 </template>
 
@@ -7,7 +7,7 @@
 import { onMounted, ref } from 'vue'
 
 import AdviceBody from '@/components/templates/AdviceBody.vue'
-import AppHeader from '@/components/templates/AppHeader.vue'
+import BannerPage from '@/components/templates/BannerPage.vue'
 import { useFetch, FetchResult } from '@/utilities/fetch'
 
 export interface Advice {
@@ -21,7 +21,7 @@ export interface Slip {
 
 //DATA
 const advice = ref<Advice | null>(null)
-
+const banner = ref<string>('When in doubt, ask for advice - but trust your gut to make the final decision.')
 //METHODS
 // METHODS
 const fetchAdvice = async (): Promise<void> => {

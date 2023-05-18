@@ -1,7 +1,7 @@
 // fetch.js
 import { ref, Ref } from 'vue'
 
-interface FetchResult<T> {
+export interface FetchResult<T> {
   data: Ref<T | null>
   error: Ref<Error | null>
 }
