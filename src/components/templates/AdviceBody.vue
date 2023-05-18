@@ -1,6 +1,6 @@
 <style scoped>
 .main-body {
-  height: 100%;
+  height: 80vh;
   width: 100%;
   display: flex;
   align-items: center;
@@ -11,7 +11,6 @@
 .card-container {
   background-color: hsl(217, 19%, 24%);
   border-radius: 25px;
-  height: 60%;
   width: 90%;
   max-width: 750px;
   display: flex;
@@ -20,6 +19,8 @@
   height: 300px;
   align-items: center;
   position: relative;
+  /* min-width: 750px;
+  min-height: 470px; */
 }
 
 .advice {
@@ -111,14 +112,15 @@
   border-radius: 50%;
 }
 
-/* .btn-container:hover {
-  box-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 30px hsl(150, 100%, 66%),
-    0 0 40px hsl(150, 100%, 66%) 0 0 50px hsl(150, 100%, 66%);
-} */
+@media screen and (min-width: 750px) and (max-width: 1440px) {
+  .card-container {
+    height: 465px;
+  }
+}
 
 @media screen and (min-width: 375px) and (max-width: 750px) {
   .main-body {
-    grid-area: 2/ 1/ 5/ 3;
+    grid-area: 6/ 1/ 7/ 3;
     background-color: hsl(218, 23%, 16%);
   }
 
@@ -132,6 +134,16 @@
 }
 
 @media screen and (max-width: 375px) {
+  .card-container {
+    height: 465px;
+  }
+  .advice {
+    font-weight: 600;
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
   .card-container {
     height: 465px;
   }
@@ -159,7 +171,8 @@
     <div class="card-container">
       <h2 class="advice">Advice # {{ advice.slip.id }}</h2>
       <p class="content">"{{ advice.slip.advice }}"</p>
-      <SvgMobileLine />
+      <SvgMobileLine v-if="windowWidth < 750" />
+      <SvgDesktopLine v-else />
       <button @click="onHandleAdvice" class="btn-container glow" ref="btnRef">
         <div class="inner-btn">
           <div class="dot-box">
@@ -180,19 +193,27 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, nextTick } from 'vue'
+import { onMounted, ref, nextTick, onBeforeUnmount } from 'vue'
 
 import { Advice } from '@/App.vue'
+import SvgDesktopLine from '@/components/atoms/SvgIcon/SvgDesktopLine.vue'
 import SvgMobileLine from '@/components/atoms/SvgIcon/SvgMobileLine.vue'
+
 defineProps<{ advice: Advice }>()
 const emit = defineEmits(['fetchAdvice'])
 
 //DATA
 const btnRef = ref<HTMLDivElement | null>(null)
+const windowWidth = ref<number>(window.innerHeight)
 
 //METHODS
 const onHandleAdvice = () => {
   emit('fetchAdvice')
+}
+
+const updateWindowWidth = () => {
+  windowWidth.value = window.innerWidth
+  console.log(windowWidth.value)
 }
 
 //LYFE CICLE
@@ -201,5 +222,11 @@ onMounted(async () => {
   if (btnRef.value) {
     btnRef.value.focus()
   }
+
+  window.addEventListener('resize', updateWindowWidth)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateWindowWidth)
 })
 </script>
