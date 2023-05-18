@@ -1,14 +1,19 @@
 <template>
   <div class="banner-container">
-    <x-sign class="banner">
+    <h1 class="banner">
       {{ banner }}
-    </x-sign>
+    </h1>
   </div>
-  <a class="ca3-scroll-down-link ca3-scroll-down-arrow" data-ca3_iconfont="ETmodules" data-ca3_icon=""></a>
+  <a
+    v-if="scrollY < 700"
+    class="ca3-scroll-down-link ca3-scroll-down-arrow"
+    data-ca3_iconfont="ETmodules"
+    data-ca3_icon=""
+  ></a>
 </template>
 
 <script setup lang="ts">
-defineProps<{ banner: string }>()
+defineProps<{ banner: string; scrollY: number }>()
 </script>
 
 <style>
@@ -26,7 +31,7 @@ defineProps<{ banner: string }>()
     grid-area: 1/ 1/ 4/ 3;
   }
 }
-x-sign {
+.banner {
   --interval: 1s;
   display: block;
   text-shadow: 0 0 10px var(--color1), 0 0 20px var(--color2), 0 0 40px var(--color3), 0 0 80px var(--color4);

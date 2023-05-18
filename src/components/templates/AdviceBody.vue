@@ -213,7 +213,6 @@ const onHandleAdvice = () => {
 
 const updateWindowWidth = () => {
   windowWidth.value = window.innerWidth
-  console.log(windowWidth.value)
 }
 
 //LYFE CICLE
