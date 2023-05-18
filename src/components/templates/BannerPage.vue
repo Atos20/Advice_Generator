@@ -9,11 +9,17 @@
     class="ca3-scroll-down-link ca3-scroll-down-arrow"
     data-ca3_iconfont="ETmodules"
     data-ca3_icon=""
+    @click="scrollToBottom"
   ></a>
 </template>
 
 <script setup lang="ts">
 defineProps<{ banner: string; scrollY: number }>()
+
+//METHODS
+const scrollToBottom = () => {
+  window.scroll({ top: 813, left: 0, behavior: 'smooth' })
+}
 </script>
 
 <style>
