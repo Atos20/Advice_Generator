@@ -193,7 +193,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, nextTick, onBeforeUnmount } from 'vue'
+import { onMounted, ref, onBeforeUnmount } from 'vue'
 
 import { Advice } from '@/App.vue'
 import SvgDesktopLine from '@/components/atoms/SvgIcon/SvgDesktopLine.vue'
@@ -216,12 +216,7 @@ const updateWindowWidth = () => {
 }
 
 //LYFE CICLE
-onMounted(async () => {
-  await nextTick()
-  if (btnRef.value) {
-    btnRef.value.focus()
-  }
-
+onMounted(() => {
   window.addEventListener('resize', updateWindowWidth)
 })
 

@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import AdviceBody from '@/components/templates/AdviceBody.vue'
 import BannerPage from '@/components/templates/BannerPage.vue'
@@ -34,10 +34,17 @@ const updateScrollY = (e: Event) => {
   scrollY.value = (e.target as Document).documentElement.scrollTop
 }
 
+const scrollToTop = () => {
+  nextTick(() => {
+    window.scroll({ top: 0, left: 0, behavior: 'smooth' })
+    scrollY.value = 0 // Reset the scroll position to 0
+  })
+}
+
 //LIFE CYCLE HOOKS
 onMounted(() => {
   fetchAdvice()
-
+  scrollToTop()
   window.addEventListener('scroll', updateScrollY)
 })
 
