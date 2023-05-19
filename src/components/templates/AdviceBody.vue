@@ -167,13 +167,13 @@
 </style>
 
 <template>
-  <div class="main-body">
+  <div class="main-body" data-testid="advice-container">
     <div class="card-container">
-      <h2 class="advice">Advice # {{ advice.slip.id }}</h2>
-      <p class="content">"{{ advice.slip.advice }}"</p>
-      <SvgMobileLine v-if="windowWidth < 750" />
-      <SvgDesktopLine v-else />
-      <button @click="onHandleAdvice" class="btn-container glow" ref="btnRef">
+      <h2 class="advice" data-testid="advice-id">Advice # {{ advice.slip.id }}</h2>
+      <p class="content" data-testid="advice-content">"{{ advice.slip.advice }}"</p>
+      <SvgMobileLine v-if="windowWidth < 750" data-testid="mobile-line" />
+      <SvgDesktopLine v-else data-testid="desktop-line" />
+      <button @click="onHandleAdvice" class="btn-container glow" ref="btnRef" data-testid="fetch-btn">
         <div class="inner-btn">
           <div class="dot-box">
             <div class="dot"></div>

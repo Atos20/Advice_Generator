@@ -1,63 +1,52 @@
 import { fireEvent, render, screen } from '@testing-library/vue'
 
-import BannerPage from '@/components/templates/BannerPage.vue'
+import AdviceBody from '@/components/templates/AdviceBody.vue'
+
+export interface Advice {
+  slip: Slip
+}
+
+export interface Slip {
+  id: string
+  advice: string
+}
 
 describe('BannerPage.vue', () => {
+  // const advice: Advice = { slip: { id: '0', advice: 'some advice' } }
   it('renders banner without any issue', () => {
-    const bannerMessage = 'A welcome message goes here'
-    render(BannerPage, {
+    render(AdviceBody, {
       props: {
-        banner: bannerMessage,
-        scrollY: 0
+        advice: { slip: { id: '1', advice: 'Some advice' } }
       }
     })
-
     //Assert that the banner message is render
-    const bannerElement = screen.getByTestId('message-id')
-    expect(bannerElement).toBeInTheDocument()
-    expect(bannerElement.textContent).toBe(bannerMessage)
+    const adviceContainer = screen.getByTestId('advice-container')
+    const adviceId = screen.getByTestId('advice-id')
+    const adviceContent = screen.getByTestId('advice-content')
+
+    expect(adviceContainer).toBeInTheDocument()
+    expect(adviceId).toBeInTheDocument()
+    expect(adviceContent).toBeInTheDocument()
   })
 
-  it('should render scroll down icon on initial load when the scrollY is 0', () => {
-    // Render the component with scrollY with initial value 0
-    render(BannerPage, {
+  it('should invoke fetchAdvice method when the fetch button is clicked', async () => {
+    const onHandleAdviceMock = jest.fn()
+    render(AdviceBody, {
       props: {
-        banner: 'A welcome message goes here',
-        scrollY: 0
-      }
-    })
-    // Assert that the "scroll to bottom" link is visible
-    const scrollLink = screen.getByTestId('scroll-icon')
-    expect(scrollLink).toBeInTheDocument()
-  })
-
-  it('should not render sroll icon once the user scrolls down', () => {
-    // Render the component with scrollY greater than 700
-    render(BannerPage, {
-      props: {
-        banner: 'A welcome message goes here',
-        scrollY: 800
-      }
-    })
-    // Assert that the "scroll to bottom" link is not initially visible
-    const scrollLink = screen.queryByRole('link', { name: 'scroll to bottom' })
-    expect(scrollLink).not.toBeInTheDocument()
-  })
-
-  it('should scroll to the bottom when scroll icon is clicked', async () => {
-    const scrollToMock = jest.fn()
-    global.scrollTo = scrollToMock
-
-    render(BannerPage, {
-      props: {
-        banner: 'A welcome message goes here',
-        scrollY: 0
+        advice: { slip: { id: 1, advice: 'Some advice' } }
+      },
+      global: {
+        mocks: {
+          onHandleAdvice: onHandleAdviceMock
+        }
       }
     })
 
-    const scrollIcon = screen.getByTestId('scroll-icon')
-    await fireEvent.click(scrollIcon)
+    const fetchButton = screen.getByTestId('fetch-btn')
+    expect(fetchButton).toBeInTheDocument()
 
-    expect(scrollToMock).toHaveBeenCalledWith({ top: 813, left: 0, behavior: 'smooth' })
+    await fireEvent.click(fetchButton)
+
+    expect(onHandleAdviceMock).toHaveBeenCalled()
   })
 })
