@@ -1,7 +1,7 @@
 import { render, screen, RenderOptions, RenderResult } from '@testing-library/vue'
 import { createPinia, setActivePinia } from 'pinia'
 
-import HelloWorld from '@/components/HelloWorld.vue'
+import HelloWorld from '@/components/templates/HelloWorld.vue'
 
 let props: RenderOptions['props'] = {}
 let renderComponent: () => RenderResult

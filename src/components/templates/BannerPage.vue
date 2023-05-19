@@ -1,11 +1,12 @@
 <template>
   <div class="banner-container">
-    <h1 class="banner">
+    <h1 class="banner" data-testid="message-id">
       {{ banner }}
     </h1>
   </div>
   <a
     v-if="scrollY < 700"
+    data-testid="scroll-icon"
     class="ca3-scroll-down-link ca3-scroll-down-arrow"
     data-ca3_iconfont="ETmodules"
     data-ca3_icon=""
@@ -18,7 +19,7 @@ defineProps<{ banner: string; scrollY: number }>()
 
 //METHODS
 const scrollToBottom = () => {
-  window.scroll({ top: 813, left: 0, behavior: 'smooth' })
+  window.scrollTo({ top: 813, left: 0, behavior: 'smooth' })
 }
 </script>
 

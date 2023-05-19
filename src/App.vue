@@ -36,8 +36,8 @@ const updateScrollY = (e: Event) => {
 
 const scrollToTop = () => {
   nextTick(() => {
-    window.scroll({ top: 0, left: 0, behavior: 'smooth' })
-    scrollY.value = 0 // Reset the scroll position to 0
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    scrollY.value = 0
   })
 }
 
