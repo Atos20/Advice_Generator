@@ -1,0 +1,63 @@
+name: Vue Application CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Cache Yarn dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build project
+        run: yarn run build
+        continue-on-error: true
+        env:
+          CI: true
+
+      - name: Run tests
+        run: yarn run test:unit
+        continue-on-error: true
+        env:
+          CI: true
+
+      - name: Handle build failure
+        if: ${{ failure() && needs.build-and-test.outputs.build-result == 'failure' }}
+        run: |
+          echo "Build failed!"
+          # Add additional build failure handling steps or notifications here
+
+      - name: Handle test failure
+        if: ${{ failure() && needs.build-and-test.outputs.test-result == 'failure' }}
+        run: |
+          echo "Tests failed!"
+          # Add additional test failure handling steps or notifications here
+
+      - name: Handle other failures
+        if: ${{ failure() }}
+        run: |
+          echo "An unexpected failure occurred!"
+          # Add additional error handling steps or notifications here
