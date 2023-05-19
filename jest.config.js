@@ -7,6 +7,7 @@ module.exports = {
     '^.+\\.ts$': 'ts-jest',
     '^.+\\.vue$': '@vue/vue3-jest'
   },
+  testMatch: ['<rootDir>/__tests__/components/**/*.ts'],
   moduleNameMapper: {
     '^.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
     '^@/(.*)$': '<rootDir>/src/$1'
